@@ -3,6 +3,7 @@ package model
 import (
 	_ "encoding/json"
 
+	middeware "github.com/bigthugboy/food-network/cmd/middleware"
 	"github.com/jinzhu/gorm"
 )
 
