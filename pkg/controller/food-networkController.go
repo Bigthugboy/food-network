@@ -9,7 +9,6 @@ import (
 	"github.com/bigthugboy/food-network/db/repo"
 	"github.com/bigthugboy/food-network/pkg/config"
 	"github.com/bigthugboy/food-network/pkg/model"
-	_ "github.com/bigthugbpoy/food-network/db/store"
 	"github.com/go-playground/validator"
 
 	"github.com/jinzhu/gorm"

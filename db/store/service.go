@@ -1,4 +1,4 @@
-package db
+package store
 
 type mainstore interface {
 	Welcome()
