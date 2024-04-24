@@ -9,8 +9,8 @@ import (
 	"github.com/bigthugboy/food-network/db/repo"
 	"github.com/bigthugboy/food-network/pkg/config"
 	"github.com/bigthugboy/food-network/pkg/model"
+	_ "github.com/bigthugbpoy/food-network/db/store"
 	"github.com/go-playground/validator"
-	_ "github.com/go-playground/validator"
 
 	"github.com/jinzhu/gorm"
 )
@@ -20,7 +20,7 @@ type foodNearby struct {
 	DB  query.DBstore
 }
 
-func newFoodNetwork(app *config.AppTools, db *gorm.DB) db.mainstore {
+func newFoodNetwork(app *config.AppTools, db *gorm.DB) store.mainstore {
 	return &foodNearby{
 		app: app,
 		DB:  repo.NewFoodNetworkDB(app, db),
@@ -52,7 +52,7 @@ func (f *foodNearby) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	track, _, err := f.DB.InsertCustomer(customer)
+	track, err := f.DB.InsertCustomer(customer)
 	if err != nil {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		log.Println("Error adding user to database:", err)
