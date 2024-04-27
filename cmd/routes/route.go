@@ -12,4 +12,8 @@ func foodNearbyRoute(r *mux.Router) {
 	r.HandleFunc("/login", controller.LoginHandler).Methods("GET")
 	r.HandleFunc("/get-foodNearby", controller.GetFoodNearbyHandler).Methods("GET")
 	r.HandleFunc("/select-restaurant", controller.SelectRestaurantHandler).Methods("GET")
+	r.HandleFunc("/get-menu-list", controller.GetMenuList).Methods("GET")
+	r.HandleFunc("/rate-resturant", controller.RateResurtant).Methods("Put")
+	r.HandleFunc("/save-favourite-resturant", controller.SaveFavouriteResturant).Methods("POST")
+
 }
