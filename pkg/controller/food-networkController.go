@@ -101,7 +101,7 @@ func (f *foodNearby) LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // get all resturant
-func (f *foodNearby) GetFoodNearbyHandler(w http.ResponseWriter, r *http.Request) {
+func (f *foodNearby) GetAllFoodNearbyHandler(w http.ResponseWriter, r *http.Request) {
 	data, err := f.DB.GetAllResturants()
 	if err != nil {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
@@ -123,10 +123,34 @@ func (f *foodNearby) SelectRestaurantHandler(w http.ResponseWriter, r *http.Requ
 	name := query.Get("name")
 	menuList := query["menu"]
 	location := query.Get("location")
-	matchedRestaurants := f.searchRestaurants(name, menuList, location)
+	matchedRestaurants := f.DB.searchRestaurants(name, menuList, location)
 	if len(matchedRestaurants) > 0 {
 		json.NewEncoder(w).Encode(matchedRestaurants)
 	} else {
 		json.NewEncoder(w).Encode(map[string]string{"message": "No restaurants found matching the criteria"})
 	}
+}
+
+func (f *foodNearby) GetMenuListHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	restaurantID := r.URL.Query().Get("restaurant_id")
+	if restaurantID == "" {
+		http.Error(w, "Restaurant ID is required", http.StatusBadRequest)
+		return
+	}
+	data, err := f.DB.GetMenuListForRestaurant(restaurantID)
+	if err != nil {
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		log.Println("Error retrieving menu list from database:", err)
+		return
+	}
+	if len(data) >= 1 {
+		json.NewEncoder(w).Encode(map[string]interface{}{"menuList": data})
+	} else {
+		json.NewEncoder(w).Encode(map[string]string{"message": "No food available"})
+	}
+
+}
+func (f *foodNearby) RateResurtant(w http.ResponseWriter, r *http.Request) {
+
 }

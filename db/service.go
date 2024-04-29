@@ -3,7 +3,7 @@ package db
 type mainstore interface {
 	Welcome()
 	RegisterHandler()
-	GetFoodNearbyHandler()
+	GetAllFoodNearbyHandler()
 	SelectRestaurantHandler()
 	GetMenuList()
 	RateResurtant()
